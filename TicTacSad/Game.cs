@@ -21,6 +21,8 @@ namespace TicTacSad
             Console.WriteLine("");
             Console.WriteLine("Jogo da Velha SAD");
             Console.WriteLine("");
+
+            WinCondition = WinCondition.NotStarted;
         }
         
         private void ReportWinner(WinCondition winCondition)

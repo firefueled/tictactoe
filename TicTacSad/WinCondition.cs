@@ -8,5 +8,6 @@ namespace TicTacSad
         NotStarted,
         Unknown,
         NotEnded,
+        Error
     }
 }
