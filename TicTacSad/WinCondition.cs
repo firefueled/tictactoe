@@ -1,11 +1,12 @@
 namespace TicTacSad
 {
-    public enum WinCondition: int
+    public enum WinCondition
     {
-        WeWin = 1,
-        TheyWin = 2,
-        Draw = 3,
-        NoConclusion = 4,
-        Unknown = 5,
+        WeWin,
+        TheyWin,
+        Draw,
+        NotStarted,
+        Unknown,
+        NotEnded,
     }
 }

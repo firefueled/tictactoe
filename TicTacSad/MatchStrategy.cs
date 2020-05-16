@@ -1,6 +1,6 @@
 namespace TicTacSad
 {
-    internal class MatchStrategy
+    public abstract class MatchStrategy
     {
     }
 }

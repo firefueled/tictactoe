@@ -1,46 +1,26 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace TicTacSad
 {
     public class Game
     {
-        private int boardX;
-        private int boardY;
-        private WinCondition winCondition = WinCondition.NoConclusion;
+        public int BoardX { get; private set; }
+        public int BoardY { get; private set; }
+
+        public MatchStrategy Strategy { get; private set; }
+        
+        public WinCondition WinCondition { get; private set; }
+
         private List<List<int>> board;
 
-        public WinCondition Start()
+        public void Init()
         {
             // Inicia programa
             Console.WriteLine("");
             Console.WriteLine("Jogo da Velha SAD");
             Console.WriteLine("");
-            
-            // Lê tabuleiro
-            ReadBoardDimensions();
-            
-            // Definição de dimensões não funcionou
-            if (boardX == null || boardY == null) return winCondition;
-            
-            // Configura tabuleiro
-            BuildBoard();
-            
-            // Criação de tábua não funcionou
-            if (board == null) return winCondition;
-            
-            // Recebe definição de jogador. X ou O
-            ReadPlayerDefinition();
-
-            // Define estratégia de jogo
-            var strategy = DefineMatchStrategy();
-                
-            winCondition = PlayMatch(strategy);
-                
-            // Condição de vitória for atendida. Reporta vencedor
-            ReportWinner(winCondition);
-
-            return winCondition;
         }
         
         private void ReportWinner(WinCondition winCondition)
@@ -48,7 +28,7 @@ namespace TicTacSad
             throw new NotImplementedException();
         }
 
-        private WinCondition PlayMatch(MatchStrategy strategy)
+        public void PlayMatch()
         {
             // Enquanto condição de vitória não for atendida, loopa
 
@@ -63,32 +43,42 @@ namespace TicTacSad
             throw new NotImplementedException();
         }
 
-        private MatchStrategy DefineMatchStrategy()
+        public bool DefineMatchStrategy()
         {
-            throw new NotImplementedException();
+            Strategy = null;
+            return true;
         }
 
-        private void ReadPlayerDefinition()
+        public bool ReadPlayerDefinition(string playerDefRead)
         {
+            return true;
         }
 
-        private void BuildBoard()
+        public bool BuildBoard()
         {
+            return true;
         }
 
-        private void ReadBoardDimensions()
+        public void SetBoardDimensions(string input)
         {
-        }
+            if (input == null)
+            {
+                throw new ArgumentException("Definição de tabuleiro vazia.");
+            }
+            
+            string boardSizeDescription = input
+                .Replace(" ", "")
+                .Replace("X", "x");
 
-        private void GetBoardDimensions()
-        {
-            Console.WriteLine("Digite o tamano do tabuleiro");
+            if (!Regex.IsMatch(boardSizeDescription, "\\dx\\d"))
+            {
+                throw new ArgumentException("Definição de tabuleiro não legível.");
+            }
 
-            string boardSizeDescription = Console.ReadLine()?
-                .Replace(" ", "");
-
-            boardX = 4;
-            boardY = 6;
+            var boardDefSplit = boardSizeDescription.Split('x');
+            
+            BoardX = int.Parse(boardDefSplit[0]);
+            BoardY = int.Parse(boardDefSplit[1]);
         }
 
         private int CheckWinCondition()
