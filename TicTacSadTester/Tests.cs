@@ -13,21 +13,12 @@ namespace TicTacSadTester
         }
         
         [Test]
-        public void GameCanReachEndAnState()
+        public void GameCanReachAnyEndState()
         {
             var game = new Game();
             WinCondition winCondition = game.Start();
             Assert.NotNull(winCondition);
             Assert.IsInstanceOf<WinCondition>(winCondition);
         }
-        
-        //
-        // [Test]
-        // public void GameCanReachEndState()
-        // {
-        //     var game = new Game();
-        //     WinCondition winCondition = game.Start();
-        //     Assert.NotNull(winCondition);
-        // }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace TicTacSad
 {
@@ -7,29 +8,35 @@ namespace TicTacSad
         private int boardX;
         private int boardY;
         private WinCondition winCondition = WinCondition.NoConclusion;
+        private List<List<int>> board;
 
         public WinCondition Start()
         {
             // Inicia programa
-            
             Console.WriteLine("");
             Console.WriteLine("Jogo da Velha SAD");
             Console.WriteLine("");
             
             // Lê tabuleiro
             ReadBoardDimensions();
-
+            
+            // Definição de dimensões não funcionou
+            if (boardX == null || boardY == null) return winCondition;
+            
             // Configura tabuleiro
             BuildBoard();
-
+            
+            // Criação de tábua não funcionou
+            if (board == null) return winCondition;
+            
             // Recebe definição de jogador. X ou O
             ReadPlayerDefinition();
 
             // Define estratégia de jogo
             var strategy = DefineMatchStrategy();
-
+                
             winCondition = PlayMatch(strategy);
-            
+                
             // Condição de vitória for atendida. Reporta vencedor
             ReportWinner(winCondition);
 
@@ -63,17 +70,14 @@ namespace TicTacSad
 
         private void ReadPlayerDefinition()
         {
-            throw new NotImplementedException();
         }
 
         private void BuildBoard()
         {
-            throw new NotImplementedException();
         }
 
         private void ReadBoardDimensions()
         {
-            throw new NotImplementedException();
         }
 
         private void GetBoardDimensions()
