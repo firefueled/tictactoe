@@ -1,6 +1,6 @@
 namespace TicTacSad
 {
-    public enum WinCondition
+    public enum EndStates
     {
         WeWin,
         TheyWin,

@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using TicTacSad;
 
 namespace TicTacSadTester
@@ -17,9 +18,9 @@ namespace TicTacSadTester
         {
             var game = new Game();
             game.Init();
-            Assert.NotNull(game.WinCondition);
-            Assert.IsInstanceOf<WinCondition>(game.WinCondition);
-            Assert.AreEqual(WinCondition.NotStarted, game.WinCondition);
+            Assert.NotNull(game.EndState);
+            Assert.IsInstanceOf<EndStates>(game.EndState);
+            Assert.AreEqual(EndStates.NotStarted, game.EndState);
         }
         
         [TestCase("4x5")]
@@ -51,11 +52,11 @@ namespace TicTacSadTester
         [TestCase("x")]
         [TestCase("ab")]
         [TestCase(".")]
-        public void ErrorsOnInvalidBoardDimensions(string input)
+        public void ThrowsOnInvalidBoardDimensions(string input)
         {
             var game = new Game();
-            game.SetBoardDimensions(input);
-            Assert.AreEqual(game.WinCondition, WinCondition.Error); 
+            Assert.Throws<ArgumentException>(() => game.SetBoardDimensions(input));
+            Assert.AreEqual(game.EndState, EndStates.Error); 
         }
     }
 }

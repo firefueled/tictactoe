@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace TicTacSad
@@ -11,7 +12,7 @@ namespace TicTacSad
 
         public MatchStrategy Strategy { get; private set; }
         
-        public WinCondition WinCondition { get; private set; }
+        public EndStates EndState { get; private set; }
 
         private List<List<int>> board;
 
@@ -22,10 +23,10 @@ namespace TicTacSad
             Console.WriteLine("Jogo da Velha SAD");
             Console.WriteLine("");
 
-            WinCondition = WinCondition.NotStarted;
+            EndState = EndStates.NotStarted;
         }
         
-        private void ReportWinner(WinCondition winCondition)
+        private void ReportWinner(EndStates endStates)
         {
             throw new NotImplementedException();
         }
@@ -65,6 +66,7 @@ namespace TicTacSad
         {
             if (input == null)
             {
+                EndState = EndStates.Error;
                 throw new ArgumentException("Definição de tabuleiro vazia.");
             }
             
@@ -74,13 +76,24 @@ namespace TicTacSad
 
             if (!Regex.IsMatch(boardSizeDescription, "\\dx\\d"))
             {
+                EndState = EndStates.Error;
                 throw new ArgumentException("Definição de tabuleiro não legível.");
             }
 
-            var boardDefSplit = boardSizeDescription.Split('x');
+            var boardDefSplit =
+                (from dim in boardSizeDescription.Split('x')
+                    select int.Parse(dim)
+                )
+                .ToList();
             
-            BoardX = int.Parse(boardDefSplit[0]);
-            BoardY = int.Parse(boardDefSplit[1]);
+            if (boardDefSplit[0] >= 10 || boardDefSplit[1] >= 10)
+            {
+                EndState = EndStates.Error;
+                throw new ArgumentException("Definição de tabuleiro grande demais.");
+            }
+            
+            BoardX = boardDefSplit[0];
+            BoardY = boardDefSplit[1];
         }
 
         private int CheckWinCondition()
