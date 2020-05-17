@@ -9,7 +9,7 @@ namespace TicTacSad
     {
         public int BoardX { get; private set; }
         public int BoardY { get; private set; }
-
+        public Play Player { get; private set; }
         public MatchStrategy Strategy { get; private set; }
         
         public EndStates EndState { get; private set; }

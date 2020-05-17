@@ -105,5 +105,39 @@ namespace TicTacSadTester
                 Assert.AreEqual(y, board[i].Count);
             }
         }
+
+        [TestCase("X", Play.X)]
+        [TestCase("x", Play.X)]
+        [TestCase("O", Play.O)]
+        [TestCase("o", Play.O)]
+        public void ReadsPlayerDefinition(string playerString, Play player)
+        {
+            var game = new Game();
+            game.Init();
+            game.ReadPlayerDefinition(playerString);
+            Assert.Equals(game.Player, player);
+        }
+        
+        [TestCase("a")]
+        [TestCase("A")]
+        [TestCase("b")]
+        [TestCase("B")]
+        [TestCase("xx")]
+        [TestCase("yy")]
+        [TestCase("XX")]
+        [TestCase("YY")]
+        [TestCase("")]
+        [TestCase(".")]
+        [TestCase("ax")]
+        [TestCase("ay")]
+        public void ThrowsOnInvalidPlayerDefinition(string playerString)
+        {
+            var game = new Game();
+            game.Init();
+            Assert.Throws<ArgumentException>(() =>
+            {
+                game.ReadPlayerDefinition(playerString);
+            });
+        }
     }
 }
