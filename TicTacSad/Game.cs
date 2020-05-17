@@ -52,9 +52,30 @@ namespace TicTacSad
             return true;
         }
 
-        public bool ReadPlayerDefinition(string playerDefRead)
+        public void ReadPlayerDefinition(string input)
         {
-            return true;
+            if (input == null)
+            {
+                EndState = EndStates.Error;
+                throw new ArgumentException("Definição de jogador vazia.");
+            }
+
+            var playerDescription = input
+                .Replace(" ", "");
+
+            if (Regex.IsMatch(playerDescription, "^[oO]$"))
+            {
+                Player = Play.O;
+            }
+            else if (Regex.IsMatch(playerDescription, "^[xX]$"))
+            {
+                Player = Play.X;
+            }
+            else 
+            {
+                EndState = EndStates.Error;
+                throw new ArgumentException("Definição de jogador não legível.");
+            }
         }
 
         public void BuildBoard()
@@ -106,7 +127,7 @@ namespace TicTacSad
                 .Replace(" ", "")
                 .Replace("X", "x");
 
-            if (!Regex.IsMatch(boardSizeDescription, "\\dx\\d"))
+            if (!Regex.IsMatch(boardSizeDescription, "^\\dx\\d$"))
             {
                 EndState = EndStates.Error;
                 throw new ArgumentException("Definição de tabuleiro não legível.");

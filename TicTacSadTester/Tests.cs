@@ -110,12 +110,18 @@ namespace TicTacSadTester
         [TestCase("x", Play.X)]
         [TestCase("O", Play.O)]
         [TestCase("o", Play.O)]
+        [TestCase(" o ", Play.O)]
+        [TestCase(" o", Play.O)]
+        [TestCase("o ", Play.O)]
+        [TestCase(" x ", Play.X)]
+        [TestCase(" x", Play.X)]
+        [TestCase("x ", Play.X)]
         public void ReadsPlayerDefinition(string playerString, Play player)
         {
             var game = new Game();
             game.Init();
             game.ReadPlayerDefinition(playerString);
-            Assert.Equals(game.Player, player);
+            Assert.AreEqual(game.Player, player);
         }
         
         [TestCase("a")]
