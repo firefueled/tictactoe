@@ -14,7 +14,7 @@ namespace TicTacSad
         
         public EndStates EndState { get; private set; }
 
-        private List<List<int>> board;
+        public List<List<Play>> Board { get; private set; }
 
         public void Init()
         {
@@ -57,9 +57,41 @@ namespace TicTacSad
             return true;
         }
 
-        public bool BuildBoard()
+        public void BuildBoard()
         {
-            return true;
+            Board = new List<List<Play>>(BoardX);
+            
+            for (var i = 0; i < BoardX; i++)
+            {   
+                Board.Add(new List<Play>(BoardY));
+                var line = Board[i];
+                
+                for (var j = 0; j < BoardY; j++)
+                {
+                    line.Add(Play.Empty);
+                }
+            }
+            
+            // Escolhe duas casas para bloquear
+            var rand = new Random(42);
+            var firstBlocker = new[]
+            {
+                rand.Next(0, BoardX - 1), 
+                rand.Next(0, BoardX - 1)
+            };
+
+            int[] secondBlocker = null;
+            while (secondBlocker == null || secondBlocker.SequenceEqual(firstBlocker)) {
+                secondBlocker = new[]
+                {
+                    rand.Next(0, BoardY - 1), 
+                    rand.Next(0, BoardY - 1)
+                };
+            }
+            
+            // Bloqueia duas casas
+            Board[firstBlocker[0]][firstBlocker[1]] = Play.Blocked;
+            Board[secondBlocker[0]][secondBlocker[1]] = Play.Blocked;
         }
 
         public void SetBoardDimensions(string input)

@@ -58,5 +58,52 @@ namespace TicTacSadTester
             Assert.Throws<ArgumentException>(() => game.SetBoardDimensions(input));
             Assert.AreEqual(game.EndState, EndStates.Error); 
         }
+
+        [Test]
+        public void BuildsBoardWithCorrectContent()
+        {
+            var game = new Game();
+            game.Init();
+            game.SetBoardDimensions("4x5");
+            game.BuildBoard();
+            
+            var blockerCount = 0;
+            foreach (var line in game.Board)
+            {
+                foreach (Play play in line)
+                {
+                    if (blockerCount < 2 && play.Equals(Play.Blocked))
+                    {
+                        blockerCount++;
+                    }
+                    else
+                    {
+                        Assert.AreEqual(Play.Empty, play);
+                    }
+                }
+            }
+            Assert.AreEqual(2, blockerCount);
+        }
+
+        [TestCase("4x5", 4, 5)]
+        [TestCase("5x4", 5, 4)]
+        [TestCase("6x5", 6, 5)]
+        [TestCase("5x6", 5, 6)]
+        [TestCase("4x6", 4, 6)]
+        [TestCase("6x4", 6, 4)]
+        public void BuildsBoardWithCorrectSize(string size, int x, int y)
+        {
+            var game = new Game();
+            game.Init();
+            game.SetBoardDimensions(size);
+            game.BuildBoard();
+            var board = game.Board;
+            
+            Assert.AreEqual(x, board.Count);
+            for (var i = 0; i < x; i++)
+            {
+                Assert.AreEqual(y, board[i].Count);
+            }
+        }
     }
 }
