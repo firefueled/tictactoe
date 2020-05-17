@@ -144,6 +144,19 @@ namespace TicTacSadTester
             {
                 game.ReadPlayerDefinition(playerString);
             });
+        }        
+        
+        [Test]
+        public void DefinesAStrategy()
+        {
+            var game = new Game();
+            game.Init();
+            Assert.DoesNotThrow(() =>
+            {
+                game.DefineMatchStrategy();
+            });
+            Assert.NotNull(game.Strategy);
+            Assert.IsInstanceOf<MatchStrategy>(game.Strategy);
         }
     }
 }

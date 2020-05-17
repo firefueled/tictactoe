@@ -46,10 +46,9 @@ namespace TicTacSad
             throw new NotImplementedException();
         }
 
-        public bool DefineMatchStrategy()
+        public void DefineMatchStrategy()
         {
-            Strategy = null;
-            return true;
+            Strategy = new RandomStrategy();
         }
 
         public void ReadPlayerDefinition(string input)
