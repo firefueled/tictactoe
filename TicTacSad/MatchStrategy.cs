@@ -4,6 +4,6 @@ namespace TicTacSad
 {
     public abstract class MatchStrategy
     {
-        public abstract void DoPlay(List<List<Play>> board, Play player);
+        public abstract List<List<Play>> DoPlay(List<List<Play>> board, Play player);
     }
 }

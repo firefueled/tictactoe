@@ -93,7 +93,7 @@ namespace TicTacSad
             }
             
             // Escolhe duas casas para bloquear
-            var rand = new Random(42);
+            var rand = new Random();
             var firstBlocker = new[]
             {
                 rand.Next(0, BoardX - 1), 
