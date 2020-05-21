@@ -16,7 +16,7 @@ namespace TicTacSadTester
             var board = TestUtils.BuildBoard(4, 5);
             
             var availableBoardPlacesBefore = TestUtils.CountAvailableBoardPlaces(board);
-            board = strategy.DoPlay(board, Play.X);
+            strategy.DoPlay(board, Play.X);
             var availableBoardPlacesAfter = TestUtils.CountAvailableBoardPlaces(board);
             
             Assert.AreEqual(1, availableBoardPlacesBefore - availableBoardPlacesAfter, 

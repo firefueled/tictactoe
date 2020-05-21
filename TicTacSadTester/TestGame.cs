@@ -158,5 +158,23 @@ namespace TicTacSadTester
             Assert.NotNull(game.Strategy);
             Assert.IsInstanceOf<MatchStrategy>(game.Strategy);
         }
+        
+        [Test]
+        public void ReachesAnEnd()
+        {
+            var game = new Game();
+            game.Init();
+            game.SetBoardDimensions("4x5");
+            game.BuildBoard();
+            game.ReadPlayerDefinition("x");
+            game.DefineMatchStrategy();
+            EndStates endStage = game.PlayMatch();
+            
+            Assert.NotNull(endStage);
+            Assert.IsInstanceOf<EndStates>(endStage);
+            
+            var boardPlacesLeft = TestUtils.CountAvailableBoardPlaces(game.Board);
+            Assert.AreEqual(0, boardPlacesLeft);
+        }
     }
 }

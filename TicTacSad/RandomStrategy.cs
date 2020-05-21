@@ -5,7 +5,7 @@ namespace TicTacSad
 {
     public class RandomStrategy : MatchStrategy
     {
-        public override List<List<Play>> DoPlay(List<List<Play>> board, Play player)
+        public override EndStates DoPlay(in List<List<Play>> board, Play player)
         {
             var length = board.Count;
             var height = board[0].Count;
@@ -22,7 +22,7 @@ namespace TicTacSad
             if (triesCount < boardSize)
                 board[randomPlace[0]][randomPlace[1]] = player;
             
-            return board;
+            return EndStates.Unknown;
         }
 
         private static int[] GetRandomPlace(int length, int height)
