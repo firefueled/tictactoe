@@ -20,7 +20,7 @@ namespace TicTacSad
             var availableBoardPlacesAfter = GameUtils.CountAvailableBoardPlaces(board);
             
             Assert.AreEqual(1, availableBoardPlacesBefore - availableBoardPlacesAfter, 
-                "A diferença da quantidade de casas antes e depois nao é -1.");
+                "A diferença da quantidade de casas antes e depois nao é 1.");
         }
     }
 }
