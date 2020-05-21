@@ -47,6 +47,7 @@
         <Compile Include="TestGame.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="TestStrategy.cs" />
+        <Compile Include="TestUtils.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\TicTacSad\TicTacSad.csproj">
