@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TicTacSad;
 
-namespace TicTacSadTester
+namespace TicTacSad
 {
-    public static class TestUtils
+    public static class GameUtils
     {
         public static int CountAvailableBoardPlaces(List<List<Play>> board)
         {

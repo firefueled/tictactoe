@@ -2,7 +2,7 @@
 using NUnit.Framework;
 using TicTacSad;
 
-namespace TicTacSadTester
+namespace TicTacSad
 {
     [TestFixture]
     public class Tests
@@ -168,12 +168,14 @@ namespace TicTacSadTester
             game.BuildBoard();
             game.ReadPlayerDefinition("x");
             game.DefineMatchStrategy();
-            EndStates endStage = game.PlayMatch();
+            game.PlayMatch();
+
+            var endState = game.EndState;
             
-            Assert.NotNull(endStage);
-            Assert.IsInstanceOf<EndStates>(endStage);
+            Assert.NotNull(endState);
+            Assert.IsInstanceOf<EndStates>(endState);
             
-            var boardPlacesLeft = TestUtils.CountAvailableBoardPlaces(game.Board);
+            var boardPlacesLeft = GameUtils.CountAvailableBoardPlaces(game.Board);
             Assert.AreEqual(0, boardPlacesLeft);
         }
     }

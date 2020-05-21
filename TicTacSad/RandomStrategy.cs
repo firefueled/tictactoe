@@ -21,7 +21,15 @@ namespace TicTacSad
             
             if (triesCount < boardSize)
                 board[randomPlace[0]][randomPlace[1]] = player;
-            
+
+            return GetCurrentEndState(board, player);
+        }
+
+        public override EndStates GetCurrentEndState(List<List<Play>> board, Play player)
+        {
+            var placesLeft = GameUtils.CountAvailableBoardPlaces(board);
+            if (placesLeft > 0)
+                return EndStates.NotEnded;
             return EndStates.Unknown;
         }
 

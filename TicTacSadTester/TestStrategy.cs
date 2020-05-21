@@ -4,7 +4,7 @@ using System.Linq;
 using NUnit.Framework;
 using TicTacSad;
 
-namespace TicTacSadTester
+namespace TicTacSad
 {
     [TestFixture]
     public class TestStrategy
@@ -13,11 +13,11 @@ namespace TicTacSadTester
         public void Strategy_PlaysOnePlay<T>(T strategyType) where T: MatchStrategy
         {
             MatchStrategy strategy = Activator.CreateInstance<T>();
-            var board = TestUtils.BuildBoard(4, 5);
+            var board = GameUtils.BuildBoard(4, 5);
             
-            var availableBoardPlacesBefore = TestUtils.CountAvailableBoardPlaces(board);
+            var availableBoardPlacesBefore = GameUtils.CountAvailableBoardPlaces(board);
             strategy.DoPlay(board, Play.X);
-            var availableBoardPlacesAfter = TestUtils.CountAvailableBoardPlaces(board);
+            var availableBoardPlacesAfter = GameUtils.CountAvailableBoardPlaces(board);
             
             Assert.AreEqual(1, availableBoardPlacesBefore - availableBoardPlacesAfter, 
                 "A diferença da quantidade de casas antes e depois nao é -1.");

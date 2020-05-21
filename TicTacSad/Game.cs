@@ -33,17 +33,10 @@ namespace TicTacSad
 
         public void PlayMatch()
         {
-            // Enquanto condição de vitória não for atendida, loopa
-
-            // Escolhe jogada
-
-            // Aguarda jogada
-
-            // Verifica condição de vitória foi atingida
-
-            // Se sim, saí do loop
-
-            throw new NotImplementedException();
+            while (EndState == EndStates.NotEnded || EndState == EndStates.NotStarted)
+            {
+                EndState = Strategy.DoPlay(Board, Player);
+            }
         }
 
         public void DefineMatchStrategy()
