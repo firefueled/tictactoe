@@ -5,7 +5,7 @@ namespace TicTacSad
 {
     public class RandomStrategy : MatchStrategy
     {
-        public override EndStates DoPlay(in List<List<Play>> board, Play player)
+        public override int[] DoPlay(in List<List<Play>> board, Play player)
         {
             var length = board.Count;
             var height = board[0].Count;
@@ -22,15 +22,7 @@ namespace TicTacSad
             if (triesCount < boardSize)
                 board[randomPlace[0]][randomPlace[1]] = player;
 
-            return GetCurrentEndState(board, player);
-        }
-
-        public override EndStates GetCurrentEndState(List<List<Play>> board, Play player)
-        {
-            var placesLeft = GameUtils.CountAvailableBoardPlaces(board);
-            if (placesLeft > 0)
-                return EndStates.NotEnded;
-            return EndStates.Unknown;
+            return randomPlace;
         }
 
         private static int[] GetRandomPlace(int length, int height)

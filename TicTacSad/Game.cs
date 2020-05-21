@@ -31,11 +31,16 @@ namespace TicTacSad
             throw new NotImplementedException();
         }
 
+        public int[] PlayOneMove()
+        {
+            return Strategy.DoPlay(Board, Player);
+        }
+
         public void PlayMatch()
         {
             while (EndState == EndStates.NotEnded || EndState == EndStates.NotStarted)
             {
-                EndState = Strategy.DoPlay(Board, Player);
+                Strategy.DoPlay(Board, Player);
             }
         }
 
