@@ -53,5 +53,17 @@ namespace TicTacSad
             board[secondBlocker[0]][secondBlocker[1]] = Play.Blocked;
             return board;
         }
+
+        public static int[] GetRandomEmptyPlace(List<List<Play>> board)
+        {
+            var rand = new Random();
+            var pos = new[] {rand.Next(0, 4 - 1), rand.Next(0, 5 - 1)};
+            while (board[pos[0]][pos[1]] != Play.Empty)
+            {
+                pos = new[] {rand.Next(0, 4 - 1), rand.Next(0, 5 - 1)};
+            }
+
+            return pos;
+        }
     }
 }

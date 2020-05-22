@@ -7,15 +7,13 @@ namespace TicTacSad
     {
         public override int[] DoPlay(in List<List<Play>> board, Play player)
         {
-            var length = board.Count;
-            var height = board[0].Count;
-            var boardSize = length + height;
+            var boardSize = board.Count + board[0].Count;
             var triesCount = 0;
             
-            var randomPlace = GetRandomPlace(length, height);
+            var randomPlace = GameUtils.GetRandomEmptyPlace(board);
             while (board[randomPlace[0]][randomPlace[1]] != Play.Empty && triesCount < boardSize)
             {
-                randomPlace = GetRandomPlace(length, height);
+                randomPlace = GameUtils.GetRandomEmptyPlace(board);
                 triesCount++;
             }
             

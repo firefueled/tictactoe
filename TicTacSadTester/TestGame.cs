@@ -83,6 +83,10 @@ namespace TicTacSad
                 }
             }
             Assert.AreEqual(2, blockerCount);
+            Assert.NotNull(game.FirstBlocker);
+            Assert.NotNull(game.SecondBlocker);
+            Assert.IsNotEmpty(game.FirstBlocker);
+            Assert.IsNotEmpty(game.SecondBlocker);
         }
 
         [TestCase("4x5", 4, 5)]
@@ -177,6 +181,50 @@ namespace TicTacSad
             
             var boardPlacesLeft = GameUtils.CountAvailableBoardPlaces(game.Board);
             Assert.AreEqual(0, boardPlacesLeft);
+        }
+        
+        [Test]
+        public void PlaysOneMove()
+        {
+            var game = new Game();
+            game.Init();
+            game.SetBoardDimensions("4x5");
+            game.BuildBoard();
+            game.ReadPlayerDefinition("x");
+            game.DefineMatchStrategy();
+
+            // Get random empty position
+            var pos = GameUtils.GetRandomEmptyPlace(game.Board);
+
+            // Plays the one move
+            var availableBoardPlacesBefore = GameUtils.CountAvailableBoardPlaces(game.Board);
+            game.PlayOneMove(pos[0] + "x" + pos[1]);
+            var availableBoardPlacesAfter = GameUtils.CountAvailableBoardPlaces(game.Board);
+            
+            Assert.AreEqual(1, availableBoardPlacesBefore - availableBoardPlacesAfter, 
+                "A diferença da quantidade de casas antes e depois nao é 1.");
+        }
+        
+        
+        [Test]
+        public void ThrowsOn_InvalidMove()
+        {
+            var game = new Game();
+            game.Init();
+            game.SetBoardDimensions("4x5");
+            game.BuildBoard();
+            game.ReadPlayerDefinition("x");
+            game.DefineMatchStrategy();
+
+            Assert.Throws<ArgumentException>(() =>
+            {
+                game.PlayOneMove(game.FirstBlocker);
+            });
+            
+            Assert.Throws<ArgumentException>(() =>
+            {
+                game.PlayOneMove(game.SecondBlocker);
+            });
         }
     }
 }

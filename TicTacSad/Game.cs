@@ -11,10 +11,14 @@ namespace TicTacSad
         public int BoardY { get; private set; }
         public Play Player { get; private set; }
         public MatchStrategy Strategy { get; private set; }
-        
+
         public EndStates EndState { get; private set; }
 
         public List<List<Play>> Board { get; private set; }
+
+        public int[] SecondBlocker { get; set; }
+
+        public int[] FirstBlocker { get; set; }
 
         public void Init()
         {
@@ -25,7 +29,7 @@ namespace TicTacSad
 
             EndState = EndStates.NotStarted;
         }
-        
+
         private void ReportWinner(EndStates endStates)
         {
             throw new NotImplementedException();
@@ -34,6 +38,24 @@ namespace TicTacSad
         public int[] PlayOneMove()
         {
             return Strategy.DoPlay(Board, Player);
+        }
+
+        public void PlayOneMove(string input)
+        {
+            var boardPos = ExtractPoint(input);
+            PlayOneMove(boardPos);            
+        }
+        
+        public void PlayOneMove(int[] pos)
+        {
+            var otherPlayer = Play.O;
+            if (Player == Play.O)
+                otherPlayer = Play.X;
+
+            if (Board[pos[0]][pos[1]] != Play.Empty)
+                throw new ArgumentException("Tentou jogar em posição não-vazia.");
+
+            Board[pos[0]][pos[1]] = otherPlayer;
         }
 
         public void PlayMatch()
@@ -68,7 +90,7 @@ namespace TicTacSad
             {
                 Player = Play.X;
             }
-            else 
+            else
             {
                 EndState = EndStates.Error;
                 throw new ArgumentException("Definição de jogador não legível.");
@@ -78,48 +100,63 @@ namespace TicTacSad
         public void BuildBoard()
         {
             Board = new List<List<Play>>(BoardX);
-            
+
             for (var i = 0; i < BoardX; i++)
-            {   
+            {
                 Board.Add(new List<Play>(BoardY));
                 var line = Board[i];
-                
+
                 for (var j = 0; j < BoardY; j++)
                 {
                     line.Add(Play.Empty);
                 }
             }
-            
+
             // Escolhe duas casas para bloquear
             var rand = new Random();
-            var firstBlocker = new[]
+            FirstBlocker = new[]
             {
-                rand.Next(0, BoardX - 1), 
+                rand.Next(0, BoardX - 1),
                 rand.Next(0, BoardX - 1)
             };
 
-            int[] secondBlocker = null;
-            while (secondBlocker == null || secondBlocker.SequenceEqual(firstBlocker)) {
-                secondBlocker = new[]
+            SecondBlocker = null;
+            while (SecondBlocker == null || SecondBlocker.SequenceEqual(FirstBlocker))
+            {
+                SecondBlocker = new[]
                 {
-                    rand.Next(0, BoardY - 1), 
+                    rand.Next(0, BoardY - 1),
                     rand.Next(0, BoardY - 1)
                 };
             }
-            
+
             // Bloqueia duas casas
-            Board[firstBlocker[0]][firstBlocker[1]] = Play.Blocked;
-            Board[secondBlocker[0]][secondBlocker[1]] = Play.Blocked;
+            Board[FirstBlocker[0]][FirstBlocker[1]] = Play.Blocked;
+            Board[SecondBlocker[0]][SecondBlocker[1]] = Play.Blocked;
         }
 
         public void SetBoardDimensions(string input)
+        {
+            var boardDefSplit = ExtractPoint(input);
+
+            if (boardDefSplit[0] >= 10 || boardDefSplit[1] >= 10)
+            {
+                EndState = EndStates.Error;
+                throw new ArgumentException("Definição de tabuleiro grande demais.");
+            }
+
+            BoardX = boardDefSplit[0];
+            BoardY = boardDefSplit[1];
+        }
+
+        private int[] ExtractPoint(string input)
         {
             if (input == null)
             {
                 EndState = EndStates.Error;
                 throw new ArgumentException("Definição de tabuleiro vazia.");
             }
-            
+
             string boardSizeDescription = input
                 .Replace(" ", "")
                 .Replace("X", "x");
@@ -130,20 +167,10 @@ namespace TicTacSad
                 throw new ArgumentException("Definição de tabuleiro não legível.");
             }
 
-            var boardDefSplit =
-                (from dim in boardSizeDescription.Split('x')
+            return (from dim in boardSizeDescription.Split('x')
                     select int.Parse(dim)
                 )
-                .ToList();
-            
-            if (boardDefSplit[0] >= 10 || boardDefSplit[1] >= 10)
-            {
-                EndState = EndStates.Error;
-                throw new ArgumentException("Definição de tabuleiro grande demais.");
-            }
-            
-            BoardX = boardDefSplit[0];
-            BoardY = boardDefSplit[1];
+                .ToArray();
         }
 
         private int CheckWinCondition()
