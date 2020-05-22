@@ -40,13 +40,13 @@ namespace TicTacSad
             return Strategy.DoPlay(Board, Player);
         }
 
-        public void PlayOneMove(string input)
+        public int[] PlayOneOtherMove(string input)
         {
             var boardPos = ExtractPoint(input);
-            PlayOneMove(boardPos);            
+            return PlayOneOtherMove(boardPos);            
         }
         
-        public void PlayOneMove(int[] pos)
+        public int[] PlayOneOtherMove(int[] pos)
         {
             var otherPlayer = Play.O;
             if (Player == Play.O)
@@ -56,6 +56,7 @@ namespace TicTacSad
                 throw new ArgumentException("Tentou jogar em posição não-vazia.");
 
             Board[pos[0]][pos[1]] = otherPlayer;
+            return PlayOneMove();
         }
 
         public void PlayMatch()

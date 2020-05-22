@@ -198,7 +198,7 @@ namespace TicTacSad
 
             // Plays the one move
             var availableBoardPlacesBefore = GameUtils.CountAvailableBoardPlaces(game.Board);
-            game.PlayOneMove(pos[0] + "x" + pos[1]);
+            game.PlayOneOtherMove(pos[0] + "x" + pos[1]);
             var availableBoardPlacesAfter = GameUtils.CountAvailableBoardPlaces(game.Board);
             
             Assert.AreEqual(1, availableBoardPlacesBefore - availableBoardPlacesAfter, 
@@ -218,12 +218,12 @@ namespace TicTacSad
 
             Assert.Throws<ArgumentException>(() =>
             {
-                game.PlayOneMove(game.FirstBlocker);
+                game.PlayOneOtherMove(game.FirstBlocker);
             });
             
             Assert.Throws<ArgumentException>(() =>
             {
-                game.PlayOneMove(game.SecondBlocker);
+                game.PlayOneOtherMove(game.SecondBlocker);
             });
         }
     }
