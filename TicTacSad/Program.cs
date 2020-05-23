@@ -12,17 +12,17 @@ namespace TicTacSad
 
             try
             {
+                // Recebe definição de jogador. X ou O
+                Console.WriteLine("Digite o nosso jogador. [X ou O]");
+                var playerDefRead = Console.ReadLine();
+                game.ReadPlayerDefinition(playerDefRead);
+
                 // Lê tabuleiro
                 Console.WriteLine("Digite o tamanho do tabuleiro. [axb]");
                 var dimensionsRead = Console.ReadLine();
                 game.SetBoardDimensions(dimensionsRead);
 
                 game.BuildBoard();
-
-                // Recebe definição de jogador. X ou O
-                Console.WriteLine("Digite o nosso jogador. [x ou o]");
-                var playerDefRead = Console.ReadLine();
-                game.ReadPlayerDefinition(playerDefRead);
 
                 PrintBoard(game.Board);
 
@@ -31,7 +31,7 @@ namespace TicTacSad
 
                 while (true)
                 {
-                    Console.WriteLine("Digite sua jogada. [axb]");
+                    Console.WriteLine("Digite sua jogada.");
                     var moveDef = Console.ReadLine();
                     var ourMove = game.PlayOneOtherMove(moveDef);
                     Console.WriteLine("Jogo em " + ourMove[0] + " X " + ourMove[1]);
