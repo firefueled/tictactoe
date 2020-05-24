@@ -32,10 +32,18 @@ namespace TicTacSad
                 while (true)
                 {
                     Console.WriteLine("Digite sua jogada.");
-                    var moveDef = Console.ReadLine();
-                    game.PlayOneOtherMove(moveDef);
-                    var ourMove = game.PlayOneMove();
-                    Console.WriteLine("Jogo em " + ourMove[0] + " X " + ourMove[1]);
+                    try
+                    {
+                        var moveDef = Console.ReadLine();
+                        game.PlayOneOtherMove(moveDef);
+                        var ourMove = game.PlayOneMove();
+                        Console.WriteLine("Eu jogo em " + ourMove.ToUpper());
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine("Erro na jogada.");
+                        Console.WriteLine(e.Message);
+                    }
                     PrintBoard(game.Board);
                 }
             }
