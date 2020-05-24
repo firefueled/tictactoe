@@ -119,28 +119,6 @@ namespace TicTacSad
                     line.Add(Play.Empty);
                 }
             }
-
-            // Escolhe duas casas para bloquear
-            var rand = new Random();
-            FirstBlocker = new[]
-            {
-                rand.Next(0, BoardX - 1),
-                rand.Next(0, BoardX - 1)
-            };
-
-            SecondBlocker = null;
-            while (SecondBlocker == null || SecondBlocker.SequenceEqual(FirstBlocker))
-            {
-                SecondBlocker = new[]
-                {
-                    rand.Next(0, BoardY - 1),
-                    rand.Next(0, BoardY - 1)
-                };
-            }
-
-            // Bloqueia duas casas
-            Board[FirstBlocker[0]][FirstBlocker[1]] = Play.Blocked;
-            Board[SecondBlocker[0]][SecondBlocker[1]] = Play.Blocked;
         }
 
         public void SetBoardDimensions(string input)
@@ -155,6 +133,16 @@ namespace TicTacSad
 
             BoardX = boardDefSplit[0];
             BoardY = boardDefSplit[1];
+        }
+        
+        public void SetBlocker(string input)
+        {
+            var blockerCoords = ExtractBoardPos(input);
+            if (FirstBlocker == null)
+                FirstBlocker = blockerCoords;
+            else
+                SecondBlocker = blockerCoords;
+            Board[blockerCoords[0]][blockerCoords[1]] = Play.Blocked;
         }
         
         private int[] ExtractBoardPos(string input)

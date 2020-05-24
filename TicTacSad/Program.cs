@@ -21,8 +21,25 @@ namespace TicTacSad
                 Console.WriteLine("Digite o tamanho do tabuleiro. [axb]");
                 var dimensionsRead = Console.ReadLine();
                 game.SetBoardDimensions(dimensionsRead);
-
                 game.BuildBoard();
+
+                while (game.FirstBlocker == null || game.SecondBlocker == null)
+                {
+                    PrintBoard(game.Board);
+                    
+                    // Lê primeiro bloqueio
+                    Console.WriteLine("Digite o primeiro bloqueio. [axb]");
+                    var firstBlockerDef = Console.ReadLine();
+                    game.SetBlocker(firstBlockerDef);
+                    
+                    PrintBoard(game.Board);
+                    
+                    // Lê segundo bloqueio
+                    Console.WriteLine("Digite o segundo bloqueio. [axb]");
+                    var secondBlockerDef = Console.ReadLine();
+                    game.SetBlocker(secondBlockerDef);
+                }
+
 
                 PrintBoard(game.Board);
 
