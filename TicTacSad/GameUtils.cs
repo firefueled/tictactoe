@@ -57,10 +57,10 @@ namespace TicTacSad
         public static int[] GetRandomEmptyPlace(List<List<Play>> board)
         {
             var rand = new Random();
-            var pos = new[] {rand.Next(0, 4 - 1), rand.Next(0, 5 - 1)};
+            var pos = new[] {rand.Next(0, board.Count), rand.Next(0, board[0].Count)};
             while (board[pos[0]][pos[1]] != Play.Empty)
             {
-                pos = new[] {rand.Next(0, 4 - 1), rand.Next(0, 5 - 1)};
+                pos = new[] {rand.Next(0, board.Count), rand.Next(0, board[0].Count)};
             }
 
             return pos;
