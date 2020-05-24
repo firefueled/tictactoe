@@ -35,9 +35,10 @@ namespace TicTacSad
             throw new NotImplementedException();
         }
 
-        public int[] PlayOneMove()
+        public string PlayOneMove()
         {
-            return Strategy.DoPlay(Board, Player);
+            var play = Strategy.DoPlay(Board, Player);
+            return GameUtils.TranslateIntPosToBoardPos(play);
         }
 
         public void PlayOneOtherMove(string input)
