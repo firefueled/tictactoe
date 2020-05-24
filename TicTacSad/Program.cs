@@ -33,7 +33,8 @@ namespace TicTacSad
                 {
                     Console.WriteLine("Digite sua jogada.");
                     var moveDef = Console.ReadLine();
-                    var ourMove = game.PlayOneOtherMove(moveDef);
+                    game.PlayOneOtherMove(moveDef);
+                    var ourMove = game.PlayOneMove();
                     Console.WriteLine("Jogo em " + ourMove[0] + " X " + ourMove[1]);
                     PrintBoard(game.Board);
                 }

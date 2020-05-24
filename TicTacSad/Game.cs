@@ -40,23 +40,29 @@ namespace TicTacSad
             return Strategy.DoPlay(Board, Player);
         }
 
-        public int[] PlayOneOtherMove(string input)
+        public void PlayOneOtherMove(string input)
         {
-            var boardPos = ExtractPoint(input);
-            return PlayOneOtherMove(boardPos);            
+            var boardPos = ExtractBoardPos(input);
+            PlayOneOtherMove(boardPos);            
         }
         
-        public int[] PlayOneOtherMove(int[] pos)
+        public void PlayOneOtherMove(int[] pos)
         {
             var otherPlayer = Play.O;
             if (Player == Play.O)
                 otherPlayer = Play.X;
 
-            if (Board[pos[0]][pos[1]] != Play.Empty)
+            try
+            {
+                if (Board[pos[0]][pos[1]] != Play.Empty)
+                    throw new ArgumentException("Tentou jogar em posição não-vazia.");
+            }
+            catch (IndexOutOfRangeException e)
+            {
                 throw new ArgumentException("Tentou jogar em posição não-vazia.");
+            }
 
             Board[pos[0]][pos[1]] = otherPlayer;
-            return PlayOneMove();
         }
 
         public void PlayMatch()
@@ -138,7 +144,7 @@ namespace TicTacSad
 
         public void SetBoardDimensions(string input)
         {
-            var boardDefSplit = ExtractPoint(input);
+            var boardDefSplit = ExtractBoardDimension(input);
 
             if (boardDefSplit[0] >= 10 || boardDefSplit[1] >= 10)
             {
@@ -149,8 +155,25 @@ namespace TicTacSad
             BoardX = boardDefSplit[0];
             BoardY = boardDefSplit[1];
         }
+        
+        private int[] ExtractBoardPos(string input)
+        {
+            if (input == null)
+            {
+                EndState = EndStates.Error;
+                throw new ArgumentException("Definição de jogada vazia.");
+            }
 
-        private int[] ExtractPoint(string input)
+            if (!Regex.IsMatch(input, "^[abcdefghABCDEFGH][12345678]$"))
+            {
+                EndState = EndStates.Error;
+                throw new ArgumentException("Definição de jogada não legível.");
+            }
+
+            return GameUtils.TranslateBoardPosToIntPos(input);
+        }
+
+        private int[] ExtractBoardDimension(string input)
         {
             if (input == null)
             {

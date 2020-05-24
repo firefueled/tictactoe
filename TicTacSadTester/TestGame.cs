@@ -194,11 +194,11 @@ namespace TicTacSad
             game.DefineMatchStrategy();
 
             // Get random empty position
-            var pos = GameUtils.GetRandomEmptyPlace(game.Board);
+            var pos = GameUtils.TranslateIntPosToBoardPos(GameUtils.GetRandomEmptyPlace(game.Board));
 
             // Plays the one move
             var availableBoardPlacesBefore = GameUtils.CountAvailableBoardPlaces(game.Board);
-            game.PlayOneOtherMove(pos[0] + "x" + pos[1]);
+            game.PlayOneOtherMove(pos);
             var availableBoardPlacesAfter = GameUtils.CountAvailableBoardPlaces(game.Board);
             
             Assert.AreEqual(1, availableBoardPlacesBefore - availableBoardPlacesAfter, 
