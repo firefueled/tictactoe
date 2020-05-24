@@ -69,25 +69,25 @@ namespace TicTacSad
         public static int[] TranslateBoardPosToIntPos(string pos)
         {
             int[] intPos = {0, 0};
-            switch (pos[0])
+            switch (pos[0].ToString().ToLower())
             {
-                case 'A': intPos[0] = 0; break;
-                case 'B': intPos[0] = 1; break;
-                case 'C': intPos[0] = 2; break;
-                case 'D': intPos[0] = 3; break;
-                case 'E': intPos[0] = 4; break;
-                case 'F': intPos[0] = 5; break;
-                case 'H': intPos[0] = 6; break;
+                case "a": intPos[1] = 0; break;
+                case "b": intPos[1] = 1; break;
+                case "c": intPos[1] = 2; break;
+                case "d": intPos[1] = 3; break;
+                case "e": intPos[1] = 4; break;
+                case "f": intPos[1] = 5; break;
+                case "g": intPos[1] = 6; break;
             }
-            switch (pos[1])
+            switch (pos[1].ToString().ToLower())
             {
-                case '1': intPos[1] = 0; break;
-                case '2': intPos[1] = 1; break;
-                case '3': intPos[1] = 2; break;
-                case '4': intPos[1] = 3; break;
-                case '5': intPos[1] = 4; break;
-                case '6': intPos[1] = 5; break;
-                case '7': intPos[1] = 6; break;
+                case "1": intPos[0] = 0; break;
+                case "2": intPos[0] = 1; break;
+                case "3": intPos[0] = 2; break;
+                case "4": intPos[0] = 3; break;
+                case "5": intPos[0] = 4; break;
+                case "6": intPos[0] = 5; break;
+                case "7": intPos[0] = 6; break;
             }
             return intPos;
         } 
@@ -95,7 +95,7 @@ namespace TicTacSad
         public static string TranslateIntPosToBoardPos(int[] pos)
         {
             var boardPos = "";
-            switch (pos[0])
+            switch (pos[1])
             {
                 case 0: boardPos += 'A'; break;
                 case 1: boardPos += 'B'; break;
@@ -103,9 +103,9 @@ namespace TicTacSad
                 case 3: boardPos += 'D'; break;
                 case 4: boardPos += 'E'; break;
                 case 5: boardPos += 'F'; break;
-                case 6: boardPos += 'H'; break;
+                case 6: boardPos += 'G'; break;
             }
-            switch (pos[1])
+            switch (pos[0])
             {
                 case 0: boardPos += '1'; break;
                 case 1: boardPos += '2'; break;

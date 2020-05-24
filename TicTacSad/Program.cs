@@ -54,34 +54,36 @@ namespace TicTacSad
                 Console.WriteLine(e);
                 Console.WriteLine("*************");
             }
-            finally
-            {
-                EndGame(game);
-            }
         }
 
         private static void PrintBoard(List<List<Play>> board)
         {
             Console.WriteLine();
-            foreach (var row in board)
+            var header1 = "   A  B  C  D  E  F  G  H ";
+            header1 = header1.Substring(0, board[0].Count * 3 + 2);
+            Console.WriteLine(header1);
+
+            for (var i = 0; i < board.Count; i++)
             {
+                var row = board[i];
                 var line = "";
                 foreach (var col in row)
                 {
                     var placeStr = "[ ]";
-                    
+
                     if (col == Play.X)
                         placeStr = "[x]";
                     if (col == Play.O)
                         placeStr = "[o]";
                     if (col == Play.Blocked)
                         placeStr = "[#]";
-                    
+
                     line += placeStr;
                 }
-                
-                Console.WriteLine(line);
+
+                Console.WriteLine(i + 1 + " " + line);
             }
+
             Console.WriteLine();
         }
 
