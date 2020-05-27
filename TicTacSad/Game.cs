@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text.RegularExpressions;
 using TicTacSad.Strategies;
 
@@ -75,9 +76,10 @@ namespace TicTacSad
             }
         }
 
-        public void DefineMatchStrategy()
+        public string DefineMatchStrategy()
         {
-            Strategy = new RandomStrategy();
+            Strategy = new CentralSpiralStrategy();
+            return Strategy.ToString();
         }
 
         public void ReadPlayerDefinition(string input)
@@ -190,6 +192,34 @@ namespace TicTacSad
         private int CheckWinCondition()
         {
             return 0;
+        }
+
+        public string DefineMatchStrategy(string input)
+        {
+            Type foundStrategy = FindStrategy(input);
+
+            if (foundStrategy == null)
+                return DefineMatchStrategy();
+
+            var instanceStrategy = Activator.CreateInstance(foundStrategy) as MatchStrategy;
+
+            if (instanceStrategy == null)
+                return DefineMatchStrategy();
+
+            Strategy = instanceStrategy;
+            return Strategy.ToString();
+        }
+
+        private static Type FindStrategy(string input)
+        {
+            if (input == null)
+                return null;
+            
+            Type strategy = (from t in Assembly.GetExecutingAssembly().GetTypes()
+                where t.IsClass && t.IsSubclassOf(typeof(MatchStrategy)) && t.Name.ToLower().Contains(input.ToLower())
+                select t).FirstOrDefault();
+
+            return strategy;
         }
     }
 }

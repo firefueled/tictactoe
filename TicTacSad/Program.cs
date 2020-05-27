@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TicTacSad
 {
@@ -9,6 +10,12 @@ namespace TicTacSad
         {
             var game = new Game();
             game.Init();
+
+            // Define estratégia de jogo
+            var strategyDef = args.FirstOrDefault();
+            var strategy = game.DefineMatchStrategy(strategyDef);
+            Console.WriteLine("Estratégia escolhida: " + strategy);
+            Console.WriteLine();
 
             try
             {
@@ -40,11 +47,7 @@ namespace TicTacSad
                     game.SetBlocker(secondBlockerDef);
                 }
 
-
                 PrintBoard(game.Board);
-
-                // Define estratégia de jogo
-                game.DefineMatchStrategy();
 
                 while (true)
                 {
