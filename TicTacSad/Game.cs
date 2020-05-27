@@ -18,9 +18,9 @@ namespace TicTacSad
 
         public List<List<Play>> Board { get; private set; }
 
-        public int[] SecondBlocker { get; set; }
+        public int[] SecondBlocker { get; private set; }
 
-        public int[] FirstBlocker { get; set; }
+        public int[] FirstBlocker { get; private set; }
 
         public void Init()
         {
@@ -30,11 +30,6 @@ namespace TicTacSad
             Console.WriteLine("");
 
             EndState = EndStates.NotStarted;
-        }
-
-        private void ReportWinner(EndStates endStates)
-        {
-            throw new NotImplementedException();
         }
 
         public string PlayOneMove()
@@ -93,7 +88,7 @@ namespace TicTacSad
             var playerDescription = input
                 .Replace(" ", "");
 
-            if (Regex.IsMatch(playerDescription, "^[oO]$"))
+            if (Regex.IsMatch(playerDescription, "^[oO0]$"))
             {
                 Player = Play.O;
             }
@@ -104,7 +99,7 @@ namespace TicTacSad
             else
             {
                 EndState = EndStates.Error;
-                throw new ArgumentException("Definição de jogador não legível.");
+                throw new ArgumentException("Definição de jogador ilegível.");
             }
         }
 
@@ -128,7 +123,7 @@ namespace TicTacSad
         {
             var boardDefSplit = ExtractBoardDimension(input);
 
-            if (boardDefSplit[0] >= 10 || boardDefSplit[1] >= 10)
+            if (boardDefSplit[0] >= 10 || boardDefSplit[1] >= 10 || boardDefSplit[0] < 4 || boardDefSplit[1] < 4)
             {
                 EndState = EndStates.Error;
                 throw new ArgumentException("Definição de tabuleiro grande demais.");
@@ -145,7 +140,14 @@ namespace TicTacSad
                 FirstBlocker = blockerCoords;
             else
                 SecondBlocker = blockerCoords;
-            Board[blockerCoords[0]][blockerCoords[1]] = Play.Blocked;
+            try
+            {
+                Board[blockerCoords[0]][blockerCoords[1]] = Play.Blocked;
+            }
+            catch (Exception e)
+            {
+                throw new ArgumentException("Posição inválida.");
+            }
         }
         
         private int[] ExtractBoardPos(string input)
@@ -159,7 +161,7 @@ namespace TicTacSad
             if (!Regex.IsMatch(input, "^[abcdefghABCDEFGH][12345678]$"))
             {
                 EndState = EndStates.Error;
-                throw new ArgumentException("Definição de jogada não legível.");
+                throw new ArgumentException("Definição de jogada ilegível.");
             }
 
             return GameUtils.TranslateBoardPosToIntPos(input);
@@ -173,14 +175,14 @@ namespace TicTacSad
                 throw new ArgumentException("Definição de tabuleiro vazia.");
             }
 
-            string boardSizeDescription = input
+            var boardSizeDescription = input
                 .Replace(" ", "")
                 .Replace("X", "x");
 
             if (!Regex.IsMatch(boardSizeDescription, "^\\dx\\d$"))
             {
                 EndState = EndStates.Error;
-                throw new ArgumentException("Definição de tabuleiro não legível.");
+                throw new ArgumentException("Definição de tabuleiro ilegível.");
             }
 
             return (from dim in boardSizeDescription.Split('x')

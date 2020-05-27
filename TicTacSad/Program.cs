@@ -75,8 +75,7 @@ namespace TicTacSad
                     }
                     catch (Exception e)
                     {
-                        Console.WriteLine("Erro na jogada.");
-                        Console.WriteLine(e.Message);
+                        Console.WriteLine("Erro na jogada. Jogue novamente.");
                     }
                     PrintBoard(game.Board);
                 }
@@ -93,9 +92,9 @@ namespace TicTacSad
         private static void PrintBoard(List<List<Play>> board)
         {
             Console.WriteLine();
-            var header1 = "   A  B  C  D  E  F  G  H ";
-            header1 = header1.Substring(0, board[0].Count * 3 + 2);
-            Console.WriteLine(header1);
+            var header = "   A  B  C  D  E  F  G  H  I  J  K ";
+            header = header.Substring(0, board[0].Count * 3 + 2);
+            Console.WriteLine(header);
 
             for (var i = 0; i < board.Count; i++)
             {
@@ -107,9 +106,9 @@ namespace TicTacSad
 
                     if (col == Play.X)
                         placeStr = "[x]";
-                    if (col == Play.O)
+                    else if (col == Play.O)
                         placeStr = "[o]";
-                    if (col == Play.Blocked)
+                    else if (col == Play.Blocked)
                         placeStr = "[#]";
 
                     line += placeStr;
@@ -119,11 +118,6 @@ namespace TicTacSad
             }
 
             Console.WriteLine();
-        }
-
-        private static void EndGame(Game game)
-        {
-            throw new NotImplementedException();
         }
     }
 }
