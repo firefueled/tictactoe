@@ -1,6 +1,7 @@
 ﻿using System;
 using NUnit.Framework;
 using TicTacSad;
+using TicTacSad.Strategies;
 
 namespace TicTacSad
 {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace TicTacSad
+namespace TicTacSad.Strategies
 {
     public class RandomStrategy : MatchStrategy
     {

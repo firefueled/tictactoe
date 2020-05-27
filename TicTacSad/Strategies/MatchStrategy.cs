@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace TicTacSad
+namespace TicTacSad.Strategies
 {
     public abstract class MatchStrategy
     {
